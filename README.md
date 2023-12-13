@@ -254,7 +254,7 @@ class ArticleService
 
 ### **Don't repeat yourself (DRY)**
 
-Reuse code when you can. SRP is helping you to avoid duplication. Also, reuse Blade templates, use Eloquent scopes etc.
+Reuse code when you can. SRP is helping you to avoid duplication. Also, use Eloquent scopes etc.
 
 Bad:
 
