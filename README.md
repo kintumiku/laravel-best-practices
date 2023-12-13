@@ -141,7 +141,7 @@ public function index()
         }])
         ->get();
 
-    return view('index', ['clients' => $clients]);
+    return $clients;
 }
 ```
 
@@ -150,7 +150,7 @@ Good:
 ```php
 public function index()
 {
-    return view('index', ['clients' => $this->client->getWithNewOrders()]);
+    return $this->client->getWithNewOrders();
 }
 
 class Client extends Model
