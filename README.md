@@ -76,11 +76,7 @@ Translations:
 
 [Comment your code, but prefer descriptive method and variable names over comments](#comment-your-code-but-prefer-descriptive-method-and-variable-names-over-comments)
 
-[Do not put JS and CSS in Blade templates and do not put any HTML in PHP classes](#do-not-put-js-and-css-in-blade-templates-and-do-not-put-any-html-in-php-classes)
-
 [Use config and language files, constants instead of text in the code](#use-config-and-language-files-constants-instead-of-text-in-the-code)
-
-[Use standard Laravel tools accepted by community](#use-standard-laravel-tools-accepted-by-community)
 
 [Follow Laravel naming conventions](#follow-laravel-naming-conventions)
 
@@ -464,34 +460,6 @@ if ($this->hasJoins())
 
 [🔝 Back to contents](#contents)
 
-### **Do not put JS and CSS in Blade templates and do not put any HTML in PHP classes**
-
-Bad:
-
-```javascript
-let article = `{{ json_encode($article) }}`;
-```
-
-Better:
-
-```php
-<input id="article" type="hidden" value='@json($article)'>
-
-Or
-
-<button class="js-fav-article" data-article='@json($article)'>{{ $article->name }}<button>
-```
-
-In a Javascript file:
-
-```javascript
-let article = $('#article').val();
-```
-
-The best way is to use specialized PHP to JS package to transfer the data.
-
-[🔝 Back to contents](#contents)
-
 ### **Use config and language files, constants instead of text in the code**
 
 Bad:
@@ -515,34 +483,6 @@ public function isNormal()
 
 return back()->with('message', __('app.article_added'));
 ```
-
-[🔝 Back to contents](#contents)
-
-### **Use standard Laravel tools accepted by community**
-
-Prefer to use built-in Laravel functionality and community packages instead of using 3rd party packages and tools. Any developer who will work with your app in the future will need to learn new tools. Also, chances to get help from the Laravel community are significantly lower when you're using a 3rd party package or tool. Do not make your client pay for that.
-
-Task | Standard tools | 3rd party tools
------------- | ------------- | -------------
-Authorization | Policies | Entrust, Sentinel and other packages
-Compiling assets | Laravel Mix, Vite | Grunt, Gulp, 3rd party packages
-Development Environment | Laravel Sail, Homestead | Docker
-Deployment | Laravel Forge | Deployer and other solutions
-Unit testing | PHPUnit, Mockery | Phpspec, Pest
-Browser testing | Laravel Dusk | Codeception
-DB | Eloquent | SQL, Doctrine
-Templates | Blade | Twig
-Working with data | Laravel collections | Arrays
-Form validation | Request classes | 3rd party packages, validation in controller
-Authentication | Built-in | 3rd party packages, your own solution
-API authentication | Laravel Passport, Laravel Sanctum | 3rd party JWT and OAuth packages
-Creating API | Built-in | Dingo API and similar packages
-Working with DB structure | Migrations | Working with DB structure directly
-Localization | Built-in | 3rd party packages
-Realtime user interfaces | Laravel Echo, Pusher | 3rd party packages and working with WebSockets directly
-Generating testing data | Seeder classes, Model Factories, Faker | Creating testing data manually
-Task scheduling | Laravel Task Scheduler | Scripts and 3rd party packages
-DB | MySQL, PostgreSQL, SQLite, SQL Server | MongoDB
 
 [🔝 Back to contents](#contents)
 
@@ -649,9 +589,7 @@ Common syntax | Shorter and more readable syntax
 `$request->session()->get('cart')` | `session('cart')`
 `Session::put('cart', $data)` | `session(['cart' => $data])`
 `$request->input('name'), Request::get('name')` | `$request->name, request('name')`
-`return Redirect::back()` | `return back()`
 `is_null($object->relation) ? null : $object->relation->id` | `optional($object->relation)->id` (in PHP 8: `$object->relation?->id`)
-`return view('index')->with('title', $title)->with('client', $client)` | `return view('index', compact('title', 'client'))`
 `$request->has('value') ? $request->value : 'default';` | `$request->get('value', 'default')`
 `Carbon::now(), Carbon::today()` | `now(), today()`
 `App::make('Class')` | `app('Class')`
@@ -775,18 +713,12 @@ public function isValidAsciiString(string $string): bool
 
 ### **Other good practices**
 
-Avoid using patterns and tools that are alien to Laravel and similar frameworks (i.e. RoR, Django). If you like Symfony (or Spring) approach for building apps, it's a good idea to use these frameworks instead.
-
 Never put any logic in routes files.
-
-Minimize usage of vanilla PHP in Blade templates.
 
 Use in-memory DB for testing.
 
 Do not override standard framework features to avoid problems related to updating the framework version and many other issues.
 
 Use modern PHP syntax where possible, but don't forget about readability.
-
-Avoid using View Composers and similar tools unless you really know what you're doing. In most cases, there is a better way to solve the problem.
 
 [🔝 Back to contents](#contents)
