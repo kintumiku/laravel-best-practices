@@ -663,10 +663,10 @@ public function isValidAsciiString(string $string): bool
 
 Never put any logic in routes files.
 
-Use in-memory DB for testing.
-
 Do not override standard framework features to avoid problems related to updating the framework version and many other issues.
 
 Use modern PHP syntax where possible, but don't forget about readability.
+
+Migrate code that will be used by multiple apps to support repositories.
 
 [🔝 Back to contents](#contents)
