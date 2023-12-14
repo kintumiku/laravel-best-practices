@@ -42,6 +42,8 @@
 
 [Return JSON Response only from Controller](#return-json-response-only-from-controller)
 
+[Dedicated Exception Class](#dedicated-exception-class)
+
 [Other good practices](#other-good-practices)
 
 ### **Single responsibility principle**
@@ -704,6 +706,38 @@ class UserService
 
 ```
 
+[🔝 Back to contents](#contents)
+
+### **Dedicated exception class**
+
+Define and throw a dedicated exception instead of using a generic one
+
+[For more information](https://laravel.com/docs/5.5/errors#the-exception-handler)
+
+Bad:
+
+```php
+public function UserService()
+{
+    try {
+     user = $this->getUser();
+    } catch(Exception $e) {
+        throw new Exception($message, $statusCode);
+    }
+}
+```
+Good:
+
+```php
+public function UserService()
+{
+    try {
+         user = $this->getUser();
+    } catch(Exception $e) {
+        throw new UserException($e);
+    }
+}
+```
 [🔝 Back to contents](#contents)
 
 ### **Other good practices**
