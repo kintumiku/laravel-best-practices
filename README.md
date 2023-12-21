@@ -740,6 +740,16 @@ public function UserService()
         throw new UserException($e);
     }
 }
+
+class UserException extends Exception
+{
+    $message = 'message';
+
+    public function __construct($message)
+    {
+        Log::write($message, $code);
+    }
+}
 ```
 
 [🔝 Back to contents](#contents)
