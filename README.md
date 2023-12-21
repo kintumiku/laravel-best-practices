@@ -18,7 +18,7 @@
 
 [Mass assignment](#mass-assignment)
 
-[Do not execute queries in Blade templates and use eager loading (N + 1 problem)](#do-not-execute-queries-in-blade-templates-and-use-eager-loading-n--1-problem)
+[Use eager loading to prevent (N + 1) problem](#use-eager-loading-n--1-problem)
 
 [Chunk data for data-heavy tasks](#chunk-data-for-data-heavy-tasks)
 
@@ -349,24 +349,26 @@ $category->article()->create($request->validated());
 
 [🔝 Back to contents](#contents)
 
-### **Do not execute queries in Blade templates and use eager loading (N + 1 problem)**
+### **Use eager loading to prevent (N + 1) problem**
 
 Bad (for 100 users, 101 DB queries will be executed):
 
-```blade
-@foreach (User::all() as $user)
-    {{ $user->profile->name }}
-@endforeach
+```php
+$users = User::all();
+foreach ($users as $user) {
+    $name = $user->profile->name;
+}
 ```
 
 Good (for 100 users, 2 DB queries will be executed):
 
-```php
-$users = User::with('profile')->get();
+- `$users = User::with('profile')->get();` or
+- Add `$with = ['profile']` in User model
 
-@foreach ($users as $user)
-    {{ $user->profile->name }}
-@endforeach
+```php
+foreach ($users as $user) {
+    $name = $user->profile->name;
+}
 ```
 
 [🔝 Back to contents](#contents)
@@ -726,6 +728,7 @@ public function UserService()
     }
 }
 ```
+
 Good:
 
 ```php
@@ -738,6 +741,7 @@ public function UserService()
     }
 }
 ```
+
 [🔝 Back to contents](#contents)
 
 ### **Other good practices**
